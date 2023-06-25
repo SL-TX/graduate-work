@@ -11,6 +11,8 @@ import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.service.AdsService;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -28,5 +30,11 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public Ads addAd(CreateAds properties, MultipartFile image) {
         AdsEntity newAds = adsMapper.createAdsToEntity(properties);
+        try {
+            newAds.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        } catch (IOException exception){
+            exception.printStackTrace();
+        }
+        return adsMapper.entityToDto(newAds);
     }
 }
