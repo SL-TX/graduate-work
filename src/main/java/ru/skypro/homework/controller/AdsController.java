@@ -26,6 +26,7 @@ public class AdsController {
 
     private final AdsService adsService;
 
+
     @Operation(summary = "Получить все объявления")
     @GetMapping
     public ResponseEntity<ResponseWrapperAds> getAllAds() {

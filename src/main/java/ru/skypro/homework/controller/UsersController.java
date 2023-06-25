@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.User;
+import ru.skypro.homework.service.UserService;
 
 @Tag(name = "Пользователи")
 @Slf4j
@@ -21,6 +22,8 @@ import ru.skypro.homework.dto.User;
 @RequiredArgsConstructor
 @RequestMapping("users")
 public class UsersController {
+
+    private final UserService userService;
 
     @Operation(summary = "Обновление пароля")
     @ApiResponses({
@@ -31,6 +34,7 @@ public class UsersController {
     })
     @PostMapping("set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword) {
+        userService.setPassword(newPassword);
         return ResponseEntity.ok().build();
     }
 
@@ -43,7 +47,7 @@ public class UsersController {
     })
     @GetMapping("me")
     public ResponseEntity<User> getUser() {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userService.getUser());
     }
 
     @Operation(summary = "Обновить информацию об авторизованном пользователе")
@@ -56,7 +60,7 @@ public class UsersController {
     })
     @PatchMapping("me")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userService.updateUser(user));
     }
 
     @Operation(summary = "Обновить аватар авторизованного пользователя")
@@ -66,6 +70,7 @@ public class UsersController {
     })
     @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(@RequestPart MultipartFile image) {
+        userService.updateUserImage(image);
         return ResponseEntity.ok().build();
     }
 }
