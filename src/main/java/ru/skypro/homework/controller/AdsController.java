@@ -36,7 +36,7 @@ public class AdsController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Ads> addAd(@RequestBody CreateAds properties, @RequestBody MultipartFile image) {
+    public ResponseEntity<Ads> addAd(@RequestPart CreateAds properties, @RequestPart MultipartFile image) {
         return ResponseEntity.ok().build();
     }
 
@@ -90,7 +90,7 @@ public class AdsController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Byte[]> updateImage(@PathVariable("id") Integer id, @RequestBody MultipartFile image) {
+    public ResponseEntity<Byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image) {
         return ResponseEntity.ok().build();
     }
 }
