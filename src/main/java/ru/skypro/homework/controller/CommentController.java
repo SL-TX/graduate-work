@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.Comment;
 import ru.skypro.homework.dto.ResponseWrapperComment;
+import ru.skypro.homework.service.CommentService;
 
 @Tag(name = "Комментарии")
 @Slf4j
@@ -19,6 +20,9 @@ import ru.skypro.homework.dto.ResponseWrapperComment;
 @RequiredArgsConstructor
 @RequestMapping("ads")
 public class CommentController {
+
+    private final CommentService commentService;
+
     @Operation(summary = "Получить комментарии объявления")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -26,7 +30,7 @@ public class CommentController {
     })
     @GetMapping("{id}/comments")
     public ResponseEntity<ResponseWrapperComment> getComments(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(commentService.getComments(id));
     }
 
     @Operation(summary = "Добавить комментарий к объявлению")
@@ -38,7 +42,7 @@ public class CommentController {
     })
     @PostMapping("{id}/comments")
     public ResponseEntity<Comment> addComment(@PathVariable("id") Integer id, @RequestBody Comment comment) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(commentService.addComment(id,comment));
     }
 
     @Operation(summary = "Удалить комментарий")
@@ -50,6 +54,7 @@ public class CommentController {
     })
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId) {
+        commentService.deleteComment(adId,commentId);
         return ResponseEntity.ok().build();
     }
 
@@ -62,6 +67,6 @@ public class CommentController {
     })
     @PatchMapping("{adId}/comments/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId, @RequestBody Comment comment) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(commentService.updateComment(adId,commentId,comment));
     }
 }
