@@ -53,7 +53,7 @@ public class AdsController {
     })
     @GetMapping("{id}")
     public ResponseEntity<FullAds> getAds(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.addAds(id));
     }
 
     @Operation(summary = "Удалить объявление")
@@ -64,6 +64,7 @@ public class AdsController {
     })
     @DeleteMapping("{id}")
     public ResponseEntity<?> removeAd(@PathVariable("id") Integer id) {
+        adsService.removeAd(id);
         return ResponseEntity.ok().build();
     }
 
@@ -76,7 +77,7 @@ public class AdsController {
     })
     @PatchMapping("{id}")
     public ResponseEntity<Ads> updateAds(@PathVariable("id") Integer id, @RequestBody CreateAds ads) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.updateAds(id,ads));
     }
 
     @Operation(summary = "Получить объявления авторизованного пользователя")
@@ -87,7 +88,7 @@ public class AdsController {
     })
     @GetMapping("me")
     public ResponseEntity<ResponseWrapperAds> getAdsMe() {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.getAdsMe());
     }
 
     @Operation(summary = "Обновить картинку объявления")
@@ -96,7 +97,7 @@ public class AdsController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image) {
+        return ResponseEntity.ok(adsService.updateImage(id,image)); //TODO:
     }
 }

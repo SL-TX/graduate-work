@@ -6,6 +6,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import ru.skypro.homework.dto.Ads;
 import ru.skypro.homework.dto.CreateAds;
+import ru.skypro.homework.dto.FullAds;
 import ru.skypro.homework.dto.ResponseWrapperAds;
 import ru.skypro.homework.entity.AdsEntity;
 
@@ -29,4 +30,10 @@ public interface AdsMapper {
     ResponseWrapperAds wrapAllAds(Integer count, List<AdsEntity> allAds);
 
     AdsEntity createAdsToEntity(CreateAds properties);
+
+    @Mapping(source = "author.firstName", target = "authorFirstName")
+    @Mapping(source = "author.lastName", target = "authorLastName")
+    @Mapping(source = "author.email", target = "email")
+    @Mapping(source = "author.phone", target = "phone")
+    FullAds entityToFullAdsDto(AdsEntity entity);
 }
