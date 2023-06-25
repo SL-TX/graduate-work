@@ -16,6 +16,7 @@ public class AdsEntity {
     @ManyToOne
     private UserEntity author;
     private String title;
+    private String description;
     private Integer price;
     private String image;
 }

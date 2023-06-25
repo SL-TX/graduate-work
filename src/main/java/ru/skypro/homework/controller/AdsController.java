@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.service.AdsService;
 
 @Tag(name = "Объявления")
 @Slf4j
@@ -22,10 +23,14 @@ import ru.skypro.homework.dto.*;
 @RequestMapping("ads")
 public class AdsController {
 
+    private final AdsService adsService;
+
     @Operation(summary = "Получить все объявления")
     @GetMapping
     public ResponseEntity<ResponseWrapperAds> getAllAds() {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(
+                adsService.getAllAds()
+        );
     }
 
     @Operation(summary = "Добавить объявление")
@@ -37,7 +42,7 @@ public class AdsController {
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Ads> addAd(@RequestPart CreateAds properties, @RequestPart MultipartFile image) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.addAd(properties,image));
     }
 
     @Operation(summary = "Получить информацию об объявлении")
