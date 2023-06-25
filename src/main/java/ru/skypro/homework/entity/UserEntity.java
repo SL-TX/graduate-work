@@ -14,12 +14,11 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String email;
+    private String email; //на фронте это подразумевается UserName
     private String firstName;
     private String lastName;
     private String phone;
     private String image;
     private String password;
     private Role role;
-    private String avatar;
 }
