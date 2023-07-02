@@ -13,6 +13,8 @@ import ru.skypro.homework.dto.Comment;
 import ru.skypro.homework.dto.ResponseWrapperComment;
 import ru.skypro.homework.service.CommentService;
 
+import java.security.Principal;
+
 @Tag(name = "Комментарии")
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -41,8 +43,8 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PostMapping("{id}/comments")
-    public ResponseEntity<Comment> addComment(@PathVariable("id") Integer id, @RequestBody Comment comment) {
-        return ResponseEntity.ok(commentService.addComment(id,comment));
+    public ResponseEntity<Comment> addComment(@PathVariable("id") Integer id, @RequestBody Comment comment, Principal principal) {
+        return ResponseEntity.ok(commentService.addComment(id, comment, principal.getName()));
     }
 
     @Operation(summary = "Удалить комментарий")
@@ -53,8 +55,8 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @DeleteMapping("{adId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId) {
-        commentService.deleteComment(adId,commentId);
+    public ResponseEntity<?> deleteComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId, Principal principal) {
+        commentService.deleteComment(adId, commentId, principal.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -66,7 +68,7 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping("{adId}/comments/{commentId}")
-    public ResponseEntity<Comment> updateComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId, @RequestBody Comment comment) {
-        return ResponseEntity.ok(commentService.updateComment(adId,commentId,comment));
+    public ResponseEntity<Comment> updateComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId, @RequestBody Comment comment, Principal principal) {
+        return ResponseEntity.ok(commentService.updateComment(adId, commentId, comment, principal.getName()));
     }
 }

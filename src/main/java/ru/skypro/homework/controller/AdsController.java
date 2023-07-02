@@ -2,8 +2,6 @@ package ru.skypro.homework.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Encoding;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.AdsService;
 
+import java.security.Principal;
+
 @Tag(name = "Объявления")
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -25,6 +25,7 @@ import ru.skypro.homework.service.AdsService;
 public class AdsController {
 
     private final AdsService adsService;
+
 
     @Operation(summary = "Получить все объявления")
     @GetMapping
@@ -42,8 +43,8 @@ public class AdsController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Ads> addAd(@RequestPart CreateAds properties, @RequestPart MultipartFile image) {
-        return ResponseEntity.ok(adsService.addAd(properties,image));
+    public ResponseEntity<Ads> addAd(@RequestPart CreateAds properties, @RequestPart MultipartFile image, Principal principal) {
+        return ResponseEntity.ok(adsService.addAd(properties, image, principal.getName()));
     }
 
     @Operation(summary = "Получить информацию об объявлении")
@@ -63,8 +64,8 @@ public class AdsController {
             @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content())
     })
     @DeleteMapping("{id}")
-    public ResponseEntity<?> removeAd(@PathVariable("id") Integer id) {
-        adsService.removeAd(id);
+    public ResponseEntity<?> removeAd(@PathVariable("id") Integer id, Principal principal) {
+        adsService.removeAd(id, principal.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -76,8 +77,8 @@ public class AdsController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping("{id}")
-    public ResponseEntity<Ads> updateAds(@PathVariable("id") Integer id, @RequestBody CreateAds ads) {
-        return ResponseEntity.ok(adsService.updateAds(id,ads));
+    public ResponseEntity<Ads> updateAds(@PathVariable("id") Integer id, @RequestBody CreateAds ads, Principal principal) {
+        return ResponseEntity.ok(adsService.updateAds(id, ads, principal.getName()));
     }
 
     @Operation(summary = "Получить объявления авторизованного пользователя")
@@ -87,8 +88,8 @@ public class AdsController {
             @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content())
     })
     @GetMapping("me")
-    public ResponseEntity<ResponseWrapperAds> getAdsMe() {
-        return ResponseEntity.ok(adsService.getAdsMe());
+    public ResponseEntity<ResponseWrapperAds> getAdsMe(Principal principal) {
+        return ResponseEntity.ok(adsService.getAdsMe(principal.getName()));
     }
 
     @Operation(summary = "Обновить картинку объявления")
@@ -97,7 +98,7 @@ public class AdsController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image) {
-        return ResponseEntity.ok(adsService.updateImage(id,image)); //TODO:
+    public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image, Principal principal) {
+        return ResponseEntity.ok(adsService.updateImage(id, image, principal.getName())); //TODO:
     }
 }

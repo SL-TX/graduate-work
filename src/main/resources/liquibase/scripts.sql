@@ -8,7 +8,8 @@ create table "user"
     phone      varchar(255),
     image      varchar(255),
     password   varchar(255),
-    role       integer
+    role       varchar(255),
+    enabled    boolean
 );
 create table ads
 (
@@ -33,13 +34,13 @@ create table comment
         constraint user_reference
             references "user",
     text       text,
-    created_at bigint
+    created_at timestamp
 );
 
-INSERT INTO "user" (id, email, first_name, image, last_name, password, phone, role)
+INSERT INTO "user" (id, email, first_name, image, last_name, password, phone, role, enabled)
 VALUES (DEFAULT, 'test@test.tt', 'first_name',
         'https://mykaleidoscope.ru/uploads/posts/2022-06/1656422760_27-mykaleidoscope-ru-p-svetlo-rizhie-volosi-devushka-krasivo-foto-28.jpg',
-        'last_name', 'password', 'test', 0);
+        'last_name', '$2a$10$nfA.RQAuHkE/HqDA6H3x4u5fBVfI2iq2RDWEyGLf9AqBxsJu4OObW', 'test', 'USER', true);
 
 INSERT INTO ads (pk, description, image, price, title, author_id)
 VALUES (DEFAULT, 'Many many row text',

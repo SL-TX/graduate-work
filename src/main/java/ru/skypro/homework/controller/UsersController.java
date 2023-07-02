@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.User;
+import ru.skypro.homework.service.UserService;
+
+import java.security.Principal;
 
 @Tag(name = "Пользователи")
 @Slf4j
@@ -21,6 +24,8 @@ import ru.skypro.homework.dto.User;
 @RequiredArgsConstructor
 @RequestMapping("users")
 public class UsersController {
+
+    private final UserService userService;
 
     @Operation(summary = "Обновление пароля")
     @ApiResponses({
@@ -31,6 +36,7 @@ public class UsersController {
     })
     @PostMapping("set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword) {
+        userService.setPassword(newPassword);
         return ResponseEntity.ok().build();
     }
 
@@ -42,8 +48,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @GetMapping("me")
-    public ResponseEntity<User> getUser() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<User> getUser(Principal principal) {
+        return ResponseEntity.ok(userService.getUser(principal.getName()));
     }
 
     @Operation(summary = "Обновить информацию об авторизованном пользователе")
@@ -55,8 +61,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping("me")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<User> updateUser(@RequestBody User user, Principal principal) {
+        return ResponseEntity.ok(userService.updateUser(user, principal.getName()));
     }
 
     @Operation(summary = "Обновить аватар авторизованного пользователя")
@@ -66,6 +72,7 @@ public class UsersController {
     })
     @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(@RequestPart MultipartFile image) {
+        userService.updateUserImage(image);
         return ResponseEntity.ok().build();
     }
 }
