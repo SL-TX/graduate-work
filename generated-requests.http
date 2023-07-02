@@ -138,7 +138,7 @@ Authorization: Basic test@test.tt password
 Content-Type: application/json
 
 {
-  "text": "string",
+  "text": "strin3g",
   "createdAt": 123123123123
 }
 ### редактировать комментарии
