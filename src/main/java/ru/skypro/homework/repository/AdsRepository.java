@@ -7,6 +7,5 @@ import ru.skypro.homework.entity.AdsEntity;
 import java.util.List;
 
 public interface AdsRepository extends JpaRepository<AdsEntity, Integer> {
-//    @Query("select a from AdsEntity a where a.author.id = ?1")
-    List<AdsEntity> findByAuthor_Id(Integer id);
+    List<AdsEntity> findByAuthor_Email(String username);
 }

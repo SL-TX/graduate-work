@@ -1,14 +1,9 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import ru.skypro.homework.dto.Ads;
-import ru.skypro.homework.dto.CreateAds;
-import ru.skypro.homework.dto.FullAds;
-import ru.skypro.homework.dto.ResponseWrapperAds;
+import org.mapstruct.*;
+import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entity.AdsEntity;
+import ru.skypro.homework.entity.CommentEntity;
 
 import java.util.List;
 
@@ -36,4 +31,8 @@ public interface AdsMapper {
     @Mapping(source = "author.email", target = "email")
     @Mapping(source = "author.phone", target = "phone")
     FullAds entityToFullAdsDto(AdsEntity entity);
+
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    AdsEntity updateEntityFromCreateAdsDto(CreateAds dto, @MappingTarget AdsEntity entity);
 }

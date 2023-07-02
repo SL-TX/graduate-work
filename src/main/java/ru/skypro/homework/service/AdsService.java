@@ -9,15 +9,15 @@ import ru.skypro.homework.dto.ResponseWrapperAds;
 public interface AdsService {
     ResponseWrapperAds getAllAds();
 
-    Ads addAd(CreateAds properties, MultipartFile image);
+    Ads addAd(CreateAds properties, MultipartFile image, String username);
 
     FullAds addAds(Integer id);
 
-    void removeAd(Integer id);
+    void removeAd(Integer id, String username);
 
-    Ads updateAds(Integer id, CreateAds ads);
+    Ads updateAds(Integer id, CreateAds ads, String username);
 
-    ResponseWrapperAds getAdsMe();
+    ResponseWrapperAds getAdsMe(String username);
 
-    byte[] updateImage(Integer id, MultipartFile image);
+    byte[] updateImage(Integer id, MultipartFile image, String username);
 }
