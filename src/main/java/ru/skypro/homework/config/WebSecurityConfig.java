@@ -5,15 +5,20 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 import javax.sql.DataSource;
 
 @Configuration
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
@@ -27,6 +32,7 @@ public class WebSecurityConfig {
 
     @Autowired
     public DataSource dataSource;
+
     @Bean
     public JdbcUserDetailsManager userDetailsService() {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
@@ -44,21 +50,28 @@ public class WebSecurityConfig {
 
         return jdbcUserDetailsManager;
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf()
+        http
+                .csrf()
                 .disable()
                 .authorizeHttpRequests(
                         (authorization) ->
                                 authorization
                                         .mvcMatchers(AUTH_WHITELIST)
                                         .permitAll()
-                    .mvcMatchers("/ads/**", "/users/**")
-                    .authenticated()
+                                        .mvcMatchers(HttpMethod.GET, "/ads", "/ads/image/**")
+                                        .permitAll()
+                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .authenticated()
                 )
                 .cors()
                 .and()
-                .httpBasic(withDefaults());
+                .httpBasic(withDefaults())
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        ;
         return http.build();
     }
 
