@@ -1,5 +1,6 @@
 package ru.skypro.homework.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,9 @@ public class UserEntity implements UserDetails {
     private String phone;
     private String image;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
+    private Boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
