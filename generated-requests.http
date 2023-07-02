@@ -189,7 +189,7 @@ Authorization: Basic test@test.tt password
 
 {
   "newPassword": "password",
-  "currentPassword": "password1"
+  "currentPassword": "password"
 }
 
 

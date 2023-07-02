@@ -1,11 +1,11 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.User;
 import ru.skypro.homework.entity.ImageEntity;
@@ -16,21 +16,25 @@ import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
 
 import java.io.IOException;
-import java.security.Principal;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserDetailsManager manager;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ImageRepository imageRepository;
+    private final PasswordEncoder encoder;
 
     @Override
-    public void setPassword(NewPassword newPassword) {
-        manager.changePassword(newPassword.getCurrentPassword(), newPassword.getNewPassword());
+    public void setPassword(NewPassword newPassword, String username) {
+        UserEntity userEntity = userRepository.findByEmail(username);
+        if (encoder.matches(newPassword.getCurrentPassword(), userEntity.getPassword())){
+            userEntity.setPassword(encoder.encode(newPassword.getNewPassword()));
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Bad old password");
+        }
+        userRepository.save(userEntity);
     }
 
     @Override
