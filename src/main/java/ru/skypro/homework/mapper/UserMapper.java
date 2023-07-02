@@ -13,5 +13,6 @@ public interface UserMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "email", ignore = true)
     UserEntity updateEntityFromDto(User dto, @MappingTarget UserEntity entity);
 }

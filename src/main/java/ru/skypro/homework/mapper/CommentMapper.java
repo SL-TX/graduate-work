@@ -29,5 +29,6 @@ public interface CommentMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "pk", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     CommentEntity updateEntityFromDto(Comment dto,@MappingTarget CommentEntity entity);
 }
