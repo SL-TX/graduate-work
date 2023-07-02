@@ -71,8 +71,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateUserImage(@RequestPart MultipartFile image) {
-        userService.updateUserImage(image);
+    public ResponseEntity<?> updateUserImage(@RequestPart MultipartFile image, Principal principal) {
+        userService.updateUserImage(image,principal.getName());
         return ResponseEntity.ok().build();
     }
 }

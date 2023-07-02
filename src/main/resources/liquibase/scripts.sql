@@ -11,6 +11,8 @@ create table "user"
     role       varchar(255),
     enabled    boolean
 );
+create unique index user_email_pkey
+    on "user" (email); -- Username
 create table ads
 (
     pk          serial
@@ -35,6 +37,12 @@ create table comment
             references "user",
     text       text,
     created_at timestamp
+);
+create table image_entity
+(
+    id    uuid not null
+        primary key,
+    image oid
 );
 
 INSERT INTO "user" (id, email, first_name, image, last_name, password, phone, role, enabled)

@@ -194,4 +194,51 @@ Authorization: Basic test@test.tt password
 
 
 
+###
+PATCH http://localhost:8080/users/me/image
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Basic test@test.tt password
 
+--boundary
+Content-Disposition: form-data; name="image"; filename="qwe.bmp";
+
+< /home/sl/qwe.bmp
+--boundary--
+###
+GET http://localhost:8080/users/me
+Content-Type: application/json
+Authorization: Basic test@test.tt password
+
+###
+GET http://localhost:8080/images/5810ea3d-63f6-4b6d-8b5a-e4b9017f9b16
+
+###
+POST http://localhost:8080/ads
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Basic test@test.tt password
+
+--boundary
+Content-Disposition: form-data; name="properties";
+Content-Type: application/json
+
+{
+  "price": 123,
+  "description": "123",
+  "title": "123"
+}
+--boundary
+Content-Disposition: form-data; name="image"; filename="test.bmp";
+
+< /home/sl/qwe.bmp
+--boundary--
+### создавать объявление
+
+PATCH http://localhost:8080/ads/2/image
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Basic test@test.tt password
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="qwe.bmp";
+
+< /home/sl/qwe.bmp
+--boundary--
