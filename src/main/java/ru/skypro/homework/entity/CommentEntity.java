@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class CommentEntity {
     @ManyToOne
     private UserEntity user;
     private String text;
-    private Long createdAt;
+    private LocalDateTime createdAt;
 }

@@ -34,7 +34,7 @@ create table comment
         constraint user_reference
             references "user",
     text       text,
-    created_at bigint
+    created_at timestamp
 );
 
 INSERT INTO "user" (id, email, first_name, image, last_name, password, phone, role, enabled)

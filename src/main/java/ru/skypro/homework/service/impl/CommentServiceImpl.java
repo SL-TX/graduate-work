@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.skypro.homework.dto.Comment;
 import ru.skypro.homework.dto.ResponseWrapperComment;
-import ru.skypro.homework.entity.AdsEntity;
 import ru.skypro.homework.entity.CommentEntity;
 import ru.skypro.homework.entity.UserEntity;
 import ru.skypro.homework.mapper.CommentMapper;
@@ -16,7 +15,7 @@ import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.CommentService;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
         CommentEntity entity = commentMapper.dtoToEntity(comment);
         entity.setUser(userRepository.findByEmail(username));
         entity.setAds(adsRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Id not found")));
-        entity.setCreatedAt(System.currentTimeMillis());
+        entity.setCreatedAt(LocalDateTime.now());
         return commentMapper.entityToDto(commentRepository.save(entity));
     }
 
