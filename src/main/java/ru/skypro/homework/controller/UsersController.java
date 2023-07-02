@@ -15,6 +15,8 @@ import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.User;
 import ru.skypro.homework.service.UserService;
 
+import java.security.Principal;
+
 @Tag(name = "Пользователи")
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -46,8 +48,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @GetMapping("me")
-    public ResponseEntity<User> getUser() {
-        return ResponseEntity.ok(userService.getUser());
+    public ResponseEntity<User> getUser(Principal principal) {
+        return ResponseEntity.ok(userService.getUser(principal.getName()));
     }
 
     @Operation(summary = "Обновить информацию об авторизованном пользователе")
@@ -59,8 +61,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping("me")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.updateUser(user));
+    public ResponseEntity<User> updateUser(@RequestBody User user,Principal principal) {
+        return ResponseEntity.ok(userService.updateUser(user,principal.getName()));
     }
 
     @Operation(summary = "Обновить аватар авторизованного пользователя")

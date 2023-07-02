@@ -13,11 +13,12 @@ import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.UserService;
 
+import java.security.Principal;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     private final UserDetailsManager manager;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -27,13 +28,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser() {
-        return userMapper.entityToDto(userRepository.findByEmail(authentication.getName()));
+    public User getUser(String email) {
+        return userMapper.entityToDto(userRepository.findByEmail(email));
     }
 
     @Override
-    public User updateUser(User user) {
-        UserEntity userEntity = userRepository.findByEmail(authentication.getName());
+    public User updateUser(User user,String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
         return userMapper.entityToDto(userRepository.save(userMapper.updateEntityFromDto(user,userEntity)));
     }
 

@@ -22,8 +22,7 @@ public class WebSecurityConfig {
             "/v3/api-docs",
             "/webjars/**",
             "/login",
-            "/register",
-            "/ads"
+            "/register"
     };
 
     @Autowired
@@ -39,7 +38,7 @@ public class WebSecurityConfig {
         jdbcUserDetailsManager.setUsersByUsernameQuery("select email,password,enabled from \"user\" where email = ?");
         jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select email,role from \"user\" where email = ?");
 //        jdbcUserDetailsManager.setCreateAuthoritySql("update \"user\" set role=? where email = ?"); //Need workaround
-        jdbcUserDetailsManager.setCreateAuthoritySql("update \"user\" set role = q1.role2 " +
+        jdbcUserDetailsManager.setCreateAuthoritySql("update \"user\" set role = substr(q1.role2,6) " +
                 "from (select ? email2, ? role2) q1 where email = q1.email2");
 
 
