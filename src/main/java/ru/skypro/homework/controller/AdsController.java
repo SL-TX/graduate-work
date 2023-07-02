@@ -44,7 +44,7 @@ public class AdsController {
     })
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Ads> addAd(@RequestPart CreateAds properties, @RequestPart MultipartFile image, Principal principal) {
-        return ResponseEntity.ok(adsService.addAd(properties,image, principal.getName()));
+        return ResponseEntity.ok(adsService.addAd(properties, image, principal.getName()));
     }
 
     @Operation(summary = "Получить информацию об объявлении")
@@ -65,7 +65,7 @@ public class AdsController {
     })
     @DeleteMapping("{id}")
     public ResponseEntity<?> removeAd(@PathVariable("id") Integer id, Principal principal) {
-        adsService.removeAd(id,principal.getName());
+        adsService.removeAd(id, principal.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -78,7 +78,7 @@ public class AdsController {
     })
     @PatchMapping("{id}")
     public ResponseEntity<Ads> updateAds(@PathVariable("id") Integer id, @RequestBody CreateAds ads, Principal principal) {
-        return ResponseEntity.ok(adsService.updateAds(id,ads, principal.getName()));
+        return ResponseEntity.ok(adsService.updateAds(id, ads, principal.getName()));
     }
 
     @Operation(summary = "Получить объявления авторизованного пользователя")
@@ -99,6 +99,6 @@ public class AdsController {
     })
     @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image, Principal principal) {
-        return ResponseEntity.ok(adsService.updateImage(id,image,principal.getName())); //TODO:
+        return ResponseEntity.ok(adsService.updateImage(id, image, principal.getName())); //TODO:
     }
 }

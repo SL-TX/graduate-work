@@ -8,6 +8,7 @@ import ru.skypro.homework.entity.UserEntity;
 public interface UserMapper {
     @Named("userToUserDto")
     User entityToDto(UserEntity entity);
+
     @InheritInverseConfiguration(name = "entityToDto")
     UserEntity dtoToEntity(User dto);
 

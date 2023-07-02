@@ -44,7 +44,7 @@ public class CommentController {
     })
     @PostMapping("{id}/comments")
     public ResponseEntity<Comment> addComment(@PathVariable("id") Integer id, @RequestBody Comment comment, Principal principal) {
-        return ResponseEntity.ok(commentService.addComment(id,comment,principal.getName()));
+        return ResponseEntity.ok(commentService.addComment(id, comment, principal.getName()));
     }
 
     @Operation(summary = "Удалить комментарий")
@@ -56,7 +56,7 @@ public class CommentController {
     })
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId, Principal principal) {
-        commentService.deleteComment(adId,commentId,principal.getName());
+        commentService.deleteComment(adId, commentId, principal.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -69,6 +69,6 @@ public class CommentController {
     })
     @PatchMapping("{adId}/comments/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable("adId") Integer adId, @PathVariable("commentId") Integer commentId, @RequestBody Comment comment, Principal principal) {
-        return ResponseEntity.ok(commentService.updateComment(adId,commentId,comment,principal.getName()));
+        return ResponseEntity.ok(commentService.updateComment(adId, commentId, comment, principal.getName()));
     }
 }

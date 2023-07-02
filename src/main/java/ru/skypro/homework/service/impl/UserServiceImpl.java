@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
     private final UserDetailsManager manager;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
     @Override
     public void setPassword(NewPassword newPassword) {
         manager.changePassword(newPassword.getCurrentPassword(), newPassword.getNewPassword());
@@ -33,9 +34,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user,String email) {
+    public User updateUser(User user, String email) {
         UserEntity userEntity = userRepository.findByEmail(email);
-        return userMapper.entityToDto(userRepository.save(userMapper.updateEntityFromDto(user,userEntity)));
+        return userMapper.entityToDto(userRepository.save(userMapper.updateEntityFromDto(user, userEntity)));
     }
 
     @Override

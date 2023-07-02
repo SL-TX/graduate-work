@@ -29,10 +29,10 @@ public class AdsServiceImpl implements AdsService {
     private final AdsRepository adsRepository;
     private final UserRepository userRepository;
 
-    private void checkUserByAd(Integer adId, String username){
+    private void checkUserByAd(Integer adId, String username) {
         UserEntity user = userRepository.findByEmail(username);
         if (!Objects.equals(
-                adsRepository.findById(adId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Id not found")).getAuthor().getId(), user.getId()
+                adsRepository.findById(adId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found")).getAuthor().getId(), user.getId()
         ) && !user.isAdmin()) {
             throw new AccessDeniedException("Denied");
         }
@@ -55,7 +55,7 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public FullAds addAds(Integer id) {
-        AdsEntity ads = adsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Id not found"));
+        AdsEntity ads = adsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found"));
         return adsMapper.entityToFullAdsDto(ads);
     }
 
@@ -69,7 +69,7 @@ public class AdsServiceImpl implements AdsService {
     public Ads updateAds(Integer id, CreateAds ads, String username) {
         checkUserByAd(id, username);
         AdsEntity ad = adsRepository.findById(id).orElseThrow();
-        return adsMapper.entityToDto(adsRepository.save(adsMapper.updateEntityFromCreateAdsDto(ads,ad)));
+        return adsMapper.entityToDto(adsRepository.save(adsMapper.updateEntityFromCreateAdsDto(ads, ad)));
     }
 
     @Override

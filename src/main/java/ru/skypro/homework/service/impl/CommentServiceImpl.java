@@ -29,39 +29,40 @@ public class CommentServiceImpl implements CommentService {
     private final AdsRepository adsRepository;
     private final UserRepository userRepository;
 
-    private void checkUserByCommentId(Integer commentId, String username){
+    private void checkUserByCommentId(Integer commentId, String username) {
         UserEntity user = userRepository.findByEmail(username);
         if (!Objects.equals(
-                commentRepository.findById(commentId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Id not found")).getUser().getId(), user.getId()
+                commentRepository.findById(commentId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found")).getUser().getId(), user.getId()
         ) && !user.isAdmin()) {
             throw new AccessDeniedException("Denied");
         }
     }
+
     @Override
     public ResponseWrapperComment getComments(Integer id) {
         List<CommentEntity> comments = commentRepository.findByAds_Pk(id);
-        return commentMapper.wrapAllComments(comments.size(),comments);
+        return commentMapper.wrapAllComments(comments.size(), comments);
     }
 
     @Override
     public Comment addComment(Integer id, Comment comment, String username) {
         CommentEntity entity = commentMapper.dtoToEntity(comment);
         entity.setUser(userRepository.findByEmail(username));
-        entity.setAds(adsRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Id not found")));
+        entity.setAds(adsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id not found")));
         entity.setCreatedAt(LocalDateTime.now());
         return commentMapper.entityToDto(commentRepository.save(entity));
     }
 
     @Override
     public void deleteComment(Integer adId, Integer commentId, String username) {
-        checkUserByCommentId(commentId,username);
+        checkUserByCommentId(commentId, username);
         commentRepository.deleteById(commentId);
     }
 
     @Override
     public Comment updateComment(Integer adId, Integer commentId, Comment comment, String username) {
-        checkUserByCommentId(commentId,username);
+        checkUserByCommentId(commentId, username);
         CommentEntity entity = commentRepository.findById(commentId).orElseThrow();
-        return commentMapper.entityToDto(commentRepository.save(commentMapper.updateEntityFromDto(comment,entity)));
+        return commentMapper.entityToDto(commentRepository.save(commentMapper.updateEntityFromDto(comment, entity)));
     }
 }

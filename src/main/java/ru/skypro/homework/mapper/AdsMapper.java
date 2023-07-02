@@ -11,17 +11,17 @@ import java.util.List;
 public interface AdsMapper {
     @Named("adsToAdsDto")
     @Mapping(source = "author.id", target = "author")
-    Ads entityToDto (AdsEntity entity);
+    Ads entityToDto(AdsEntity entity);
 
     @Named("adsToAdsDtos")
     @IterableMapping(qualifiedByName = "adsToAdsDto")
-    List<Ads> entitiesToDtos (List<AdsEntity> entities);
+    List<Ads> entitiesToDtos(List<AdsEntity> entities);
 
     @Mapping(source = "author", target = "author.id")
-    AdsEntity dtoToEntity (Ads dto);
+    AdsEntity dtoToEntity(Ads dto);
 
     @Mapping(target = "results", source = "allAds", qualifiedByName = "adsToAdsDtos")
-    //@Mapping(target = "count", expression = "java(allAds.size)")
+        //@Mapping(target = "count", expression = "java(allAds.size)")
     ResponseWrapperAds wrapAllAds(Integer count, List<AdsEntity> allAds);
 
     AdsEntity createAdsToEntity(CreateAds properties);

@@ -6,7 +6,7 @@ import ru.skypro.homework.dto.ResponseWrapperComment;
 public interface CommentService {
     ResponseWrapperComment getComments(Integer id);
 
-    Comment addComment(Integer id, Comment comment,String username);
+    Comment addComment(Integer id, Comment comment, String username);
 
     void deleteComment(Integer adId, Integer commentId, String username);
 

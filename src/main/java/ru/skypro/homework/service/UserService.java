@@ -11,7 +11,7 @@ public interface UserService {
 
     User getUser(String email);
 
-    User updateUser(User user,String email);
+    User updateUser(User user, String email);
 
     void updateUserImage(MultipartFile image);
 }

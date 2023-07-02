@@ -61,8 +61,8 @@ public class UsersController {
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
     @PatchMapping("me")
-    public ResponseEntity<User> updateUser(@RequestBody User user,Principal principal) {
-        return ResponseEntity.ok(userService.updateUser(user,principal.getName()));
+    public ResponseEntity<User> updateUser(@RequestBody User user, Principal principal) {
+        return ResponseEntity.ok(userService.updateUser(user, principal.getName()));
     }
 
     @Operation(summary = "Обновить аватар авторизованного пользователя")

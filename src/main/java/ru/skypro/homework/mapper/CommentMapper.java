@@ -17,17 +17,17 @@ public interface CommentMapper {
     @Mapping(source = "user.firstName", target = "authorFirstName")
     @Mapping(source = "user.image", target = "authorImage")
     @Mapping(target = "createdAt", expression = "java(entity.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())")
-    Comment entityToDto (CommentEntity entity);
+    Comment entityToDto(CommentEntity entity);
 
     @Named("commentsToCommentDtos")
     @IterableMapping(qualifiedByName = "commentToCommentDto")
-    List<Comment> entitiesToDtos (List<CommentEntity> entities);
+    List<Comment> entitiesToDtos(List<CommentEntity> entities);
 
     @Mapping(source = "author", target = "user.id")
     @Mapping(target = "pk", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
 //    @Mapping(target = "createdAt", expression = "java(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getCreatedAt()), ZoneId.systemDefault()))")
-    CommentEntity dtoToEntity (Comment dto);
+    CommentEntity dtoToEntity(Comment dto);
 
     @Mapping(target = "count", source = "size")
     @Mapping(target = "results", source = "comments", qualifiedByName = "commentsToCommentDtos")
@@ -36,5 +36,5 @@ public interface CommentMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "pk", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    CommentEntity updateEntityFromDto(Comment dto,@MappingTarget CommentEntity entity);
+    CommentEntity updateEntityFromDto(Comment dto, @MappingTarget CommentEntity entity);
 }
