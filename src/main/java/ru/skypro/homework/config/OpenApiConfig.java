@@ -12,7 +12,7 @@ public class OpenApiConfig {
     public OpenAPI setOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Ads app API Documentation")
+                        .title("Документация проекта платформы по перепродаже вещей")
                         .version("1.0")
                 );
     }
