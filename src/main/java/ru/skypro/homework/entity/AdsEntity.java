@@ -20,6 +20,6 @@ public class AdsEntity {
     private String description;
     private Integer price;
     private String image;
-    @OneToMany(mappedBy = "ads",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "ads", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentEntity> comments;
 }

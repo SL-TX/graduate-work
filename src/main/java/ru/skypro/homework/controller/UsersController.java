@@ -72,7 +72,7 @@ public class UsersController {
     })
     @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(@RequestPart MultipartFile image, Principal principal) {
-        userService.updateUserImage(image,principal.getName());
+        userService.updateUserImage(image, principal.getName());
         return ResponseEntity.ok().build();
     }
 }

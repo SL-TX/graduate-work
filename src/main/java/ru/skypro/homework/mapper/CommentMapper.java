@@ -26,7 +26,6 @@ public interface CommentMapper {
     @Mapping(source = "author", target = "user.id")
     @Mapping(target = "pk", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-//    @Mapping(target = "createdAt", expression = "java(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getCreatedAt()), ZoneId.systemDefault()))")
     CommentEntity dtoToEntity(Comment dto);
 
     @Mapping(target = "count", source = "size")

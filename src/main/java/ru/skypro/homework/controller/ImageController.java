@@ -16,6 +16,7 @@ import ru.skypro.homework.service.ImageService;
 public class ImageController {
 
     private final ImageService imageService;
+
     @GetMapping(value = "{id}",
             produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, "image/*"})
     public byte[] getImage(@PathVariable String id) {

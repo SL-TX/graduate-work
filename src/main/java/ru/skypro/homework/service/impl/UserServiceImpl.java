@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setPassword(NewPassword newPassword, String username) {
         UserEntity userEntity = userRepository.findByEmail(username);
-        if (encoder.matches(newPassword.getCurrentPassword(), userEntity.getPassword())){
+        if (encoder.matches(newPassword.getCurrentPassword(), userEntity.getPassword())) {
             userEntity.setPassword(encoder.encode(newPassword.getNewPassword()));
         } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Bad old password");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bad old password");
         }
         userRepository.save(userEntity);
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
         imageRepository.save(img);
-        String link = "/images/"+img.getId().toString();
+        String link = "/images/" + img.getId().toString();
         UserEntity user = userRepository.findByEmail(username);
         user.setImage(link);
         userRepository.save(user);

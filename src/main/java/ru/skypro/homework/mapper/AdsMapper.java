@@ -1,9 +1,11 @@
 package ru.skypro.homework.mapper;
 
 import org.mapstruct.*;
-import ru.skypro.homework.dto.*;
+import ru.skypro.homework.dto.Ads;
+import ru.skypro.homework.dto.CreateAds;
+import ru.skypro.homework.dto.FullAds;
+import ru.skypro.homework.dto.ResponseWrapperAds;
 import ru.skypro.homework.entity.AdsEntity;
-import ru.skypro.homework.entity.CommentEntity;
 
 import java.util.List;
 
@@ -21,7 +23,6 @@ public interface AdsMapper {
     AdsEntity dtoToEntity(Ads dto);
 
     @Mapping(target = "results", source = "allAds", qualifiedByName = "adsToAdsDtos")
-        //@Mapping(target = "count", expression = "java(allAds.size)")
     ResponseWrapperAds wrapAllAds(Integer count, List<AdsEntity> allAds);
 
     AdsEntity createAdsToEntity(CreateAds properties);
