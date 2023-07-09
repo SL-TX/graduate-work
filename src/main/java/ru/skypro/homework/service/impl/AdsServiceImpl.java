@@ -41,7 +41,7 @@ public class AdsServiceImpl implements AdsService {
             throw new RuntimeException(e);
         }
         imageRepository.save(img);
-        return  "http://localhost:8080/images/"+img.getId().toString();
+        return  "/images/"+img.getId().toString();
     }
 
     private void checkUserByAd(Integer adId, String username) {

@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
         imageRepository.save(img);
-        String link = "http://localhost:8080/images/"+img.getId().toString();
+        String link = "/images/"+img.getId().toString();
         UserEntity user = userRepository.findByEmail(username);
         user.setImage(link);
         userRepository.save(user);

@@ -44,14 +44,3 @@ create table image_entity
         primary key,
     image oid
 );
-
-INSERT INTO "user" (id, email, first_name, image, last_name, password, phone, role, enabled)
-VALUES (DEFAULT, 'test@test.tt', 'first_name',
-        'https://mykaleidoscope.ru/uploads/posts/2022-06/1656422760_27-mykaleidoscope-ru-p-svetlo-rizhie-volosi-devushka-krasivo-foto-28.jpg',
-        'last_name', '$2a$10$nfA.RQAuHkE/HqDA6H3x4u5fBVfI2iq2RDWEyGLf9AqBxsJu4OObW', 'test', 'USER', true);
-
-INSERT INTO ads (pk, description, image, price, title, author_id)
-VALUES (DEFAULT, 'Many many row text',
-        'https://mykaleidoscope.ru/uploads/posts/2022-06/1656422760_27-mykaleidoscope-ru-p-svetlo-rizhie-volosi-devushka-krasivo-foto-28.jpg',
-        1231, 'Title', 1);
-

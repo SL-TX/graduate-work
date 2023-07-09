@@ -97,7 +97,8 @@ public class AdsController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content())
     })
-    @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = {MediaType.IMAGE_PNG_VALUE})
+    @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, "image/*"})
     public ResponseEntity<byte[]> updateImage(@PathVariable("id") Integer id, @RequestPart MultipartFile image, Principal principal) {
         return ResponseEntity.ok(adsService.updateImage(id, image, principal.getName()));
     }
