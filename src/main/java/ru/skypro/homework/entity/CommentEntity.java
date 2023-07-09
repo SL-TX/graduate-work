@@ -16,7 +16,7 @@ public class CommentEntity {
     private Integer pk;
     @ManyToOne
     private AdsEntity ads;
-    @ManyToOne
+    @ManyToOne()
     private UserEntity user;
     private String text;
     private LocalDateTime createdAt;

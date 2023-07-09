@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +20,6 @@ public class AdsEntity {
     private String description;
     private Integer price;
     private String image;
+    @OneToMany(mappedBy = "ads",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CommentEntity> comments;
 }
