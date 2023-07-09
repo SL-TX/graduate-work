@@ -7,11 +7,11 @@ import ru.skypro.homework.dto.User;
 import java.security.Principal;
 
 public interface UserService {
-    void setPassword(NewPassword newPassword);
+    void setPassword(NewPassword newPassword, String username);
 
     User getUser(String email);
 
     User updateUser(User user, String email);
 
-    void updateUserImage(MultipartFile image);
+    void updateUserImage(MultipartFile image, String username);
 }

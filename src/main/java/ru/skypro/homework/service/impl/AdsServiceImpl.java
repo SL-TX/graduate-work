@@ -12,12 +12,15 @@ import ru.skypro.homework.dto.CreateAds;
 import ru.skypro.homework.dto.FullAds;
 import ru.skypro.homework.dto.ResponseWrapperAds;
 import ru.skypro.homework.entity.AdsEntity;
+import ru.skypro.homework.entity.ImageEntity;
 import ru.skypro.homework.entity.UserEntity;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.repository.AdsRepository;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +31,18 @@ public class AdsServiceImpl implements AdsService {
     private final AdsMapper adsMapper;
     private final AdsRepository adsRepository;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
+
+    private String uploadImage(MultipartFile image){
+        ImageEntity img = new ImageEntity();
+        try {
+            img.setImage(image.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        imageRepository.save(img);
+        return  "/images/"+img.getId().toString();
+    }
 
     private void checkUserByAd(Integer adId, String username) {
         UserEntity user = userRepository.findByEmail(username);
@@ -47,7 +62,7 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public Ads addAd(CreateAds properties, MultipartFile image, String username) {
         AdsEntity newAds = adsMapper.createAdsToEntity(properties);
-        newAds.setImage(image.getOriginalFilename());//TODO:
+        newAds.setImage(uploadImage(image));
         newAds.setAuthor(userRepository.findByEmail(username));
         adsRepository.save(newAds);
         return adsMapper.entityToDto(newAds);
@@ -83,6 +98,8 @@ public class AdsServiceImpl implements AdsService {
     public byte[] updateImage(Integer id, MultipartFile image, String username) {
         checkUserByAd(id, username);
         AdsEntity ads = adsRepository.findById(id).orElseThrow();
+        ads.setImage(uploadImage(image));
+        adsRepository.save(ads);
         return image.getBytes();
     }
 }
