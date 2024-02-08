@@ -7,17 +7,21 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.entity.UserEntity;
+import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AuthService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
     private final UserDetailsManager manager;
+    private final UserRepository userRepository;
 
     private final PasswordEncoder encoder;
 
-    public AuthServiceImpl(UserDetailsManager manager, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(UserDetailsManager manager, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.manager = manager;
+        this.userRepository = userRepository;
         this.encoder = passwordEncoder;
     }
 
@@ -42,6 +46,11 @@ public class AuthServiceImpl implements AuthService {
                         .username(registerReq.getUsername())
                         .roles(role.name())
                         .build());
+        UserEntity user = userRepository.findByEmail(registerReq.getUsername());
+        user.setFirstName(registerReq.getFirstName());
+        user.setLastName(registerReq.getLastName());
+        user.setPhone(registerReq.getPhone());
+        userRepository.save(user);
         return true;
     }
 }

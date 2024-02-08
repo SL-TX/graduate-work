@@ -1,7 +1,5 @@
 package ru.skypro.homework.config;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 import javax.sql.DataSource;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableMethodSecurity
@@ -43,7 +42,6 @@ public class WebSecurityConfig {
         jdbcUserDetailsManager.setDeleteUserSql("delete from \"user\" where email = ?");
         jdbcUserDetailsManager.setUsersByUsernameQuery("select email,password,enabled from \"user\" where email = ?");
         jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select email,role from \"user\" where email = ?");
-//        jdbcUserDetailsManager.setCreateAuthoritySql("update \"user\" set role=? where email = ?"); //Need workaround
         jdbcUserDetailsManager.setCreateAuthoritySql("update \"user\" set role = substr(q1.role2,6) " +
                 "from (select ? email2, ? role2) q1 where email = q1.email2");
 

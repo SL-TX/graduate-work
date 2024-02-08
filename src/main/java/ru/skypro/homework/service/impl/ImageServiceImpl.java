@@ -14,10 +14,11 @@ import java.util.UUID;
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
+
     @Override
     public byte[] getImage(String id) {
         var image = imageRepository.findById(UUID.fromString(id)).orElseThrow(
-                ()->new ResponseStatusException(HttpStatus.NOT_FOUND,"UUID of image not found")
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UUID of image not found")
         );
         return image.getImage();
     }

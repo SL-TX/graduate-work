@@ -33,7 +33,7 @@ public class AdsServiceImpl implements AdsService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
 
-    private String uploadImage(MultipartFile image){
+    private String uploadImage(MultipartFile image) {
         ImageEntity img = new ImageEntity();
         try {
             img.setImage(image.getBytes());
@@ -41,7 +41,7 @@ public class AdsServiceImpl implements AdsService {
             throw new RuntimeException(e);
         }
         imageRepository.save(img);
-        return  "/images/"+img.getId().toString();
+        return "/images/" + img.getId().toString();
     }
 
     private void checkUserByAd(Integer adId, String username) {

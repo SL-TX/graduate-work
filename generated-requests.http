@@ -2,8 +2,10 @@
 #Аноним
 ###
 GET http://localhost:8080/ads
+
 ### получать список объявлений
 GET http://localhost:8080/ads/1
+
 ### получать одно объявление 401
 POST http://localhost:8080/ads
 Content-Type: application/json
@@ -15,6 +17,7 @@ Content-Type: application/json
   "pk": 1233,
   "title": "123"
 }
+
 ###
 POST http://localhost:8080/login
 Content-Type: application/json
@@ -23,6 +26,7 @@ Content-Type: application/json
   "username": "test@test.tt",
   "password": "password"
 }
+
 ###
 POST http://localhost:8080/register
 Content-Type: application/json
@@ -31,20 +35,24 @@ Content-Type: application/json
   "username": "test@test3.tt",
   "password": "password1"
 }
+
 ###
 # User
 ###
 GET http://localhost:8080/ads
 Content-Type: application/json
 Authorization: Basic test@test.tt password
+
 ### получать список объявлений
 GET http://localhost:8080/ads/me
 Content-Type: application/json
 Authorization: Basic test@test.tt password
+
 ### получать список своих объявлений
 GET http://localhost:8080/ads/1
 Content-Type: application/json
 Authorization: Basic test@test.tt password
+
 ### получать одно объявление
 POST http://localhost:8080/ads
 Content-Type: multipart/form-data; boundary=boundary
@@ -64,6 +72,7 @@ Content-Type: application/json
 Content-Disposition: form-data; name="image"; filename="/home/sl/Изображения/Screenshot_20230625_143523.bmp";
 
 --boundary--
+
 ### создавать объявление
 POST http://localhost:8080/ads
 Content-Type: multipart/form-data; boundary=boundary
@@ -82,6 +91,7 @@ Content-Type: application/json
 Content-Disposition: form-data; name="image"; filename="/home/sl/Изображения/Screenshot_20230625_143523.bmp";
 
 --boundary--
+
 ### создавать объявление t2
 PATCH http://localhost:8080/ads/1
 Content-Type: application/json
@@ -92,6 +102,7 @@ Authorization: Basic test@tst.tt password
   "description": "12sd3",
   "title": "12sdf3"
 }
+
 ### редактировать свое объявление
 PATCH http://localhost:8080/ads/2
 Content-Type: application/json
@@ -102,6 +113,7 @@ Authorization: Basic test@test.tt password
   "description": "12sd3",
   "title": "12sdf3"
 }
+
 ### редактировать свое объявление v2 403
 PATCH http://localhost:8080/ads/2222
 Content-Type: application/json
@@ -112,18 +124,23 @@ Authorization: Basic test@test.tt password
   "description": "12sd3",
   "title": "12sdf3"
 }
+
 ### редактировать свое объявление v3 404
 DELETE http://localhost:8080/ads/1
 Authorization: Basic test@test.tt password
+
 ### удалять свое объявление
 DELETE http://localhost:8080/ads/2
 Authorization: Basic test@test.tt password
+
 ### удалять свое объявление v2 403
 DELETE http://localhost:8080/ads/2222
 Authorization: Basic test@test.tt password
+
 ### удалять свое объявление v3 404
 GET http://localhost:8080/ads/1/comments
 Authorization: Basic test@test.tt password
+
 ### получать список комментариев
 POST http://localhost:8080/ads/1/comments
 Authorization: Basic test@test.tt password
@@ -132,6 +149,7 @@ Content-Type: application/json
 {
   "text": "string"
 }
+
 ### создавать комментарии
 PATCH http://localhost:8080/ads/1/comments/4
 Authorization: Basic test@test.tt password
@@ -141,6 +159,7 @@ Content-Type: application/json
   "text": "strin3g",
   "createdAt": 123123123123
 }
+
 ### редактировать комментарии
 PATCH http://localhost:8080/ads/1/comments/4
 Authorization: Basic test@tst.tt password
@@ -150,12 +169,15 @@ Content-Type: application/json
   "text": "string",
   "createdAt": 123123123123
 }
+
 ### редактировать комментарии2
 DELETE http://localhost:8080/ads/1/comments/3
 Authorization: Basic test@test.tt password
+
 ### удалять свои комментарии
 DELETE http://localhost:8080/ads/1/comments/3
 Authorization: Basic test@tst.tt password
+
 ### удалять свои комментарии2
 ###
 
@@ -204,6 +226,7 @@ Content-Disposition: form-data; name="image"; filename="qwe.bmp";
 
 < /home/sl/qwe.bmp
 --boundary--
+
 ###
 GET http://localhost:8080/users/me
 Content-Type: application/json
@@ -231,6 +254,7 @@ Content-Disposition: form-data; name="image"; filename="test.bmp";
 
 < /home/sl/qwe.bmp
 --boundary--
+
 ### создавать объявление
 
 PATCH http://localhost:8080/ads/2/image
